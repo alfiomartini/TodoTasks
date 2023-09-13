@@ -1,19 +1,18 @@
 @namespace Components
 @typeparam T
-@inject State state
 
 <h1>@Title</h1>
 
-@if (state.IsLoading)
+@if (appState.IsLoading)
 {
     <Alert Message="Loading..." />
     Console.WriteLine("Loading...");
 }
-else if (state.HasError)
+else if (appState.HasError)
 {
     <AlertContainer>
         There was a problem with your request
-        <button @onclick="()=> state.HasError = false" class="btn btn-secondary">Click to Remove</button>
+        <button @onclick="()=> appState.HasError = false" class="btn btn-secondary">Click to Remove</button>
     </AlertContainer>
     Console.WriteLine("Error with the request");
 }
@@ -39,6 +38,8 @@ else
 
 
 @code {
+    [CascadingParameter(Name = "appState")]
+    private State appState { get; set; } = new State();
     [Parameter] public string? Title { get; set; }
     [Parameter] public List<T> Items { get; set; } = new List<T>();
     [Parameter] public RenderFragment? HeaderTemplate { get; set; }

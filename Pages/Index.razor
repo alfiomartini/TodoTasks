@@ -1,21 +1,21 @@
 ﻿@page "/"
 @inject HttpClient Http
 @inject IRepository repository;
-@inject State state;
-
 
 <hr>
-<NewTasks tasks="@tasks" Title="Assignments" />
+<CascadingValue Name="appState" Value="@appState">
+    <NewTasks tasks="@tasks" Title="Assignments" />
+</CascadingValue>
 <hr>
 
 @code {
-
+    private State appState = new State();
     private List<Assignment>? tasks = new List<Assignment>();
     @* LifeCycle Method *@
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine("App state at start:\n" + state);
-        state.IsLoading = true;
+        Console.WriteLine("App state in cascading branch at start:\n" + appState);
+        appState.IsLoading = true;
         try
         {
             tasks = await Http.GetFromJsonAsync<List<Assignment>>("data/tasks.json");
@@ -26,9 +26,9 @@
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            state.HasError = true;
+            appState.HasError = true;
         }
-        state.IsLoading = false;
+        appState.IsLoading = false;
 
     }
 }

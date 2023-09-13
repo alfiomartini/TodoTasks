@@ -26,10 +26,7 @@
 @code {
     [Parameter] public List<Assignment>? tasks { get; set; }
     [Parameter] public string? Title { get; set; }
-
     private string newTask = "";
-
-
     private void AddTask()
     {
         if (!string.IsNullOrWhiteSpace(newTask) && tasks != null)
