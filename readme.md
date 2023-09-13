@@ -1,4 +1,4 @@
-# Todo List App
+# TodoTasks App
 
 ## Description
 
@@ -22,4 +22,4 @@
 
 - run the command `dotnet watch run`
 
-This project was created by running `dotnet new blazorwasm -o TodoList`
+This project was created by running `dotnet new blazorwasm -o TodoTasks`
