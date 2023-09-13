@@ -8,7 +8,7 @@
 ## Branches
 
 - _master_: uses singleton services to model global state
-- _cascading_: uses cascading elements to model global state (not recommended)
+- _cascading_: uses `cascading elements` to model global state (not recommended)
 
 ## Further Developments
 
@@ -16,7 +16,6 @@
 - Implement additional http methods in the repository
 - Add unit tests
 - Style using tailwind
-- Use `CascadingValue` component to implement global memory
 
 ## How to Run this app (development mode)
 
