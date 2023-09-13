@@ -1,0 +1,27 @@
+@namespace Components
+
+@if (Item != null)
+{
+
+    <td>@Item.CreationDate</td>
+    <td>@Item.Description</td>
+    <td><input type="checkbox" name="" id="" @bind="@Item.Done">@Item.Done</td>
+    <td><button @onclick="@OnDeleteAsync"><i class="oi oi-trash"></i>
+        </button></td>
+}
+
+
+@code {
+    [Parameter] public Assignment? Item { get; set; }
+    [Parameter] public EventCallback<Assignment> OnDeleteTask { get; set; }
+
+    private void OnDelete()
+    {
+        OnDeleteTask.InvokeAsync(Item);
+    }
+
+    private async Task OnDeleteAsync()
+    {
+        await OnDeleteTask.InvokeAsync(Item);
+    }
+}

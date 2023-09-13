@@ -1,0 +1,57 @@
+@namespace Components
+@using Models
+
+<GenericTasks Items="@tasks" Title="New Assignments">
+    <HeaderTemplate>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Finished</th>
+    </HeaderTemplate>
+    <RowTemplate Context="task">
+        <SingleTask Item="task" OnDeleteTask="HandleDelete" />
+    </RowTemplate>
+</GenericTasks>
+
+
+@if (tasks != null)
+{
+    <div class="form-group">
+        <label for="">New Task</label>
+        <input type="text" name="" id="" placeholder="Type new Task" @bind="@newTask">
+        <button type="button" @onclick="@AddTask">Add Task</button>
+    </div>
+}
+
+
+@code {
+    [Parameter] public List<Assignment>? tasks { get; set; }
+    [Parameter] public string? Title { get; set; }
+
+    private string newTask = "";
+
+
+    private void AddTask()
+    {
+        if (!string.IsNullOrWhiteSpace(newTask) && tasks != null)
+        {
+            tasks.Add(new Assignment()
+                {
+                    CreationDate = DateTime.Now,
+                    Description = newTask,
+                    Done = false,
+                    ID = Guid.NewGuid(),
+                });
+            Console.WriteLine($"New Task {newTask} added");
+        }
+        newTask = "";
+    }
+
+    private void HandleDelete(Assignment item)
+    {
+        if (tasks != null)
+        {
+            tasks.Remove(tasks.First<Assignment>(task => task.ID == item.ID));
+        }
+
+    }
+}

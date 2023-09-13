@@ -1,0 +1,34 @@
+﻿@page "/"
+@inject HttpClient Http
+@inject IRepository repository;
+@inject State state;
+
+
+<hr>
+<NewTasks tasks="@tasks" Title="Assignments" />
+<hr>
+
+@code {
+
+    private List<Assignment>? tasks = new List<Assignment>();
+    @* LifeCycle Method *@
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("App state at start:\n" + state);
+        state.IsLoading = true;
+        try
+        {
+            tasks = await Http.GetFromJsonAsync<List<Assignment>>("data/tasks.json");
+            @* tasks = await repository.GetTasksFromJson(); *@
+            Console.WriteLine("tasks were fetched");
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            state.HasError = true;
+        }
+        state.IsLoading = false;
+
+    }
+}

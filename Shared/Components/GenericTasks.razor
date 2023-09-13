@@ -1,0 +1,46 @@
+@namespace Components
+@typeparam T
+@inject State state
+
+<h1>@Title</h1>
+
+@if (state.IsLoading)
+{
+    <Alert Message="Loading..." />
+    Console.WriteLine("Loading...");
+}
+else if (state.HasError)
+{
+    <AlertContainer>
+        There was a problem with your request
+        <button @onclick="()=> state.HasError = false" class="btn btn-secondary">Click to Remove</button>
+    </AlertContainer>
+    Console.WriteLine("Error with the request");
+}
+else
+{
+    <table class="table">
+        <thead>
+            @HeaderTemplate
+        </thead>
+        <tbody>
+            @if (@RowTemplate != null)
+            {
+                @foreach (var item in Items)
+                {
+                    <tr>
+                        @RowTemplate(item)
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public List<T> Items { get; set; } = new List<T>();
+    [Parameter] public RenderFragment? HeaderTemplate { get; set; }
+    [Parameter] public RenderFragment<T>? RowTemplate { get; set; }
+}
